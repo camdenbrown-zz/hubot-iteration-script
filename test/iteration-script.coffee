@@ -1,9 +1,8 @@
 Helper = require('hubot-test-helper')
 chai = require 'chai'
-
 expect = chai.expect
 
-helper = new Helper('../src/iteration-script.coffee')
+helper = new Helper('../src/iteration-script.js')
 process.env.ALLOWED_ITERATION_ROOMS = ['room_1, room_2']
 process.env.JIRA_IDENTIFIER = '1234'
 process.env.PROJECT_IDENTIFIER = 'Web'
