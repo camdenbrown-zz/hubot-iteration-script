@@ -2,6 +2,3 @@
 
 # bootstrap environment
 source script/bootstrap
-
---require coffee-script/register
---compilers coffee:coffee-script
