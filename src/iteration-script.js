@@ -14,16 +14,10 @@
 //
 // Author: Camden Brown
 
-Metrics = require('./metrics/iterations');
+import Metric from './metrics/metric';
 let allowedRooms = process.env.ALLOWED_ITERATION_ROOMS.split(',');
-let jiraIdentifier = process.env.JIRA_IDENTIFIER;
-let projectIdentifier = process.env.PROJECT_IDENTIFIER;
 
 module.exports = (robot) => {
-  let retrieveTeamCommitment = () => {
-    return Metrics.getProjectMetrics(jiraIdentifier, projectIdentifier);
-  };
-
   robot.respond(/dev complete story points: (.*)/i, ({ match, message: { room } }) => {
     if (allowedRooms.some(i => room == i)) {
       robot.brain.set('devCompleteStoryPointCommitment', match[1]);
@@ -40,14 +34,12 @@ module.exports = (robot) => {
     if (allowedRooms.some(i => room == i)) {
       let devCompleteStoryPointCommitment = robot.brain.get('devCompleteStoryPointCommitment');
       let devCompleteBugCommitment = robot.brain.get('devCompleteBugCommitment');
-
-      retrieveTeamCommitment().then(data => {
-        reply(
-          `Your team currently has:
-          ${data.devCompleteStoryPoints} out of ${devCompleteStoryPointCommitment} story points in Dev Complete
-          ${data.devCompleteBugs} out of ${devCompleteBugCommitment} bugs in Dev Complete`
-        );
-      });
+    
+      reply(
+        `Your team currently has:
+        ${Metric.getDevCompleteStoryPoints()} out of ${devCompleteStoryPointCommitment} story points in Dev Complete
+        ${Metric.getDevCompleteBugs()} out of ${devCompleteBugCommitment} bugs in Dev Complete`
+      );
     }
   });
 };
