@@ -2,3 +2,5 @@
 
 # bootstrap environment
 source script/bootstrap
+
+--compilers coffee:coffee-script
