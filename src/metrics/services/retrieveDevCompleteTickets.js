@@ -1,19 +1,15 @@
 import MetovaMetrics from 'metova-metrics';
-import Moment from 'moment';
+import { Moment } from 'moment';
 
-class DevCompleteTickets() {
+export default class DevCompleteTickets() {
+  const thirtyMinutes = 30 * 60 * 1000;
+  const previousIterationStartDate = moment().startOf('isoWeek').subtract(3, 'days').startOf('day');
+  const newIterationStartDate = moment().startOf('isoWeek').add(4, 'days');
+  let totalStoryPoints = 0;
+  let totalBugCount = 0;
 
   constuctor() {
-    const thirtyMinutes = 30 * 60 * 1000;
-    const previousIterationStartDate = moment().startOf('isoWeek').subtract(3, 'days').startOf('day');
-    const newIterationStartDate = moment().startOf('isoWeek').add(4, 'days');
-    let totalStoryPoints = 0;
-    let totalBugCount = 0;
-
-    if(!totalStoryPoints || !totalBugCount) {
-      updateMetrics()
-    }
-
+    updateMetrics();
     setInterval(updateMetrics, thirtyMinutes);
   }
 
