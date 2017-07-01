@@ -1,14 +1,14 @@
 import MetovaMetrics from 'metova-metrics';
-import { Moment } from 'moment';
+import Moment from 'moment';
 
-export default class DevCompleteTickets() {
-  const thirtyMinutes = 30 * 60 * 1000;
-  const previousIterationStartDate = moment().startOf('isoWeek').subtract(3, 'days').startOf('day');
-  const newIterationStartDate = moment().startOf('isoWeek').add(4, 'days');
-  let totalStoryPoints = 0;
-  let totalBugCount = 0;
-
+export default class DevCompleteTickets {
   constuctor() {
+    const thirtyMinutes = 30 * 60 * 1000;
+    const previousIterationStartDate = moment().startOf('isoWeek').subtract(3, 'days').startOf('day');
+    const newIterationStartDate = moment().startOf('isoWeek').add(4, 'days');
+    let totalStoryPoints = 0;
+    let totalBugCount = 0;
+
     updateMetrics();
     setInterval(updateMetrics, thirtyMinutes);
   }
@@ -21,7 +21,7 @@ export default class DevCompleteTickets() {
     return totalBugCount;
   }
 
-  const updateMetrics = () => {
+  _updateMetrics() {
     totalBugCount = 0;
     totalStoryPoints = 0;
     MetovaMetrics.getMetrics({ namespace: "jira", metric: "stories" }, ({ data }) => {
@@ -29,7 +29,7 @@ export default class DevCompleteTickets() {
     });
   }
 
-  const buildProjectStatus = (data) => {
+  _buildProjectStatus(data) {
     let ticket = data.value;
 
     if(filterIterationDevComplete(data)) {
@@ -41,7 +41,7 @@ export default class DevCompleteTickets() {
     }
   }
 
-  const filterIterationDevComplete = ({ value: ticket }) => {
+  filterIterationDevComplete({ value: ticket }) {
     return ticket.project_key === process.env.PROJECT_IDENTIFIER
            && (ticket.state === 'completed' || ticket.state === 'accepted')
            && moment(ticket.completed_at).isBetween(previousIterationStartDate, newIterationStartDate);
