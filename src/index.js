@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 export default function(robot, scripts) {
-  let scriptsPath = path.resolve(__dirname, 'src');
+  let scriptsPath = path.resolve(__dirname, 'lib');
   if (fs.existsSync(scriptsPath)) {
     return (() => {
       let result = [];
