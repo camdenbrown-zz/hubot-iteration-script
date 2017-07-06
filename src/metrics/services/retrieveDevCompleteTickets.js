@@ -1,29 +1,31 @@
 import MetovaMetrics from 'metova-metrics';
 import Moment from 'moment';
+const jiraIdentifier = process.env.JIRA_IDENTIFIER;
+const projectIdentifier = process.env.PROJECT_IDENTIFIER;
+const thirtyMinutes = 30 * 60 * 1000;
+const previousIterationStartDate = Moment().startOf('isoWeek').subtract(3, 'days').startOf('day');
+const newIterationStartDate = Moment().startOf('isoWeek').add(4, 'days');
 
 export default class DevCompleteTickets {
   constuctor() {
-    const thirtyMinutes = 30 * 60 * 1000;
-    const previousIterationStartDate = moment().startOf('isoWeek').subtract(3, 'days').startOf('day');
-    const newIterationStartDate = moment().startOf('isoWeek').add(4, 'days');
-    let totalStoryPoints = 0;
-    let totalBugCount = 0;
+    this.totalStoryPoints = 0;
+    this.totalBugCount = 0;
 
     updateMetrics();
     setInterval(updateMetrics, thirtyMinutes);
   }
 
   getStoryPoints() {
-    return totalStoryPoints;
+    return this.totalStoryPoints;
   }
 
   getBugCount() {
-    return totalBugCount;
+    return this.totalBugCount;
   }
 
   _updateMetrics() {
-    totalBugCount = 0;
-    totalStoryPoints = 0;
+    this.totalBugCount = 0;
+    this.totalStoryPoints = 0;
     MetovaMetrics.getMetrics({ namespace: "jira", metric: "stories" }, ({ data }) => {
       data.forEach(buildProjectStatus);
     });
@@ -34,15 +36,15 @@ export default class DevCompleteTickets {
 
     if(filterIterationDevComplete(data)) {
       if(ticket.issue_type === 'Story') {
-        totalStoryPoints += ticket.story_point_value;
+        this.totalStoryPoints += ticket.story_point_value;
       } else if (ticket.issue_type === 'Bug') {
-        totalBugCount += 1;
+        this.totalBugCount += 1;
       }
     }
   }
 
   filterIterationDevComplete({ value: ticket }) {
-    return ticket.project_key === process.env.PROJECT_IDENTIFIER
+    return ticket.project_key === projectIdentifier
            && (ticket.state === 'completed' || ticket.state === 'accepted')
            && moment(ticket.completed_at).isBetween(previousIterationStartDate, newIterationStartDate);
   }

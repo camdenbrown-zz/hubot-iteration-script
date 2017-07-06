@@ -1,17 +1,17 @@
 import DevCompleteTickets from './services/retrieveDevCompleteTickets';
+const jiraIdentifier = process.env.JIRA_IDENTIFIER;
+const projectIdentifier = process.env.PROJECT_IDENTIFIER;
 
 export default class Metric {
   constuctor() {
-    let jiraIdentifier = process.env.JIRA_IDENTIFIER;
-    let projectIdentifier = process.env.PROJECT_IDENTIFIER;
     return Metrics.getProjectMetrics(jiraIdentifier, projectIdentifier);
   }
 
   getDevCompleteBugs() {
-    DevCompleteTickets.getBugCount();
+    new DevCompleteTickets().getBugCount();
   }
 
   getDevCompleteStoryPoints() {
-    DevCompleteTickets.getStoryPoints();
+    new DevCompleteTickets().getStoryPoints();
   }
 }

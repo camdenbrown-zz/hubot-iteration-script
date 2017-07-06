@@ -36,11 +36,12 @@ module.exports = (robot) => {
     if (allowedRooms.some(i => res.message.room == i)) {
       let devCompleteStoryPointCommitment = robot.brain.get('devCompleteStoryPointCommitment');
       let devCompleteBugCommitment = robot.brain.get('devCompleteBugCommitment');
+      let metric = new Metric();
 
       res.reply(
         `Your team currently has:
-        ${Metric.getDevCompleteStoryPoints()} out of ${devCompleteStoryPointCommitment} story points in Dev Complete
-        ${Metric.getDevCompleteBugs()} out of ${devCompleteBugCommitment} bugs in Dev Complete`
+        ${metric.getDevCompleteStoryPoints()} out of ${devCompleteStoryPointCommitment} story points in Dev Complete
+        ${metric.getDevCompleteBugs()} out of ${devCompleteBugCommitment} bugs in Dev Complete`
       );
     }
   });
