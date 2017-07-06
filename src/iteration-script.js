@@ -37,7 +37,7 @@ module.exports = (robot) => {
       let devCompleteStoryPointCommitment = robot.brain.get('devCompleteStoryPointCommitment');
       let devCompleteBugCommitment = robot.brain.get('devCompleteBugCommitment');
 
-      reply(
+      res.reply(
         `Your team currently has:
         ${Metric.getDevCompleteStoryPoints()} out of ${devCompleteStoryPointCommitment} story points in Dev Complete
         ${Metric.getDevCompleteBugs()} out of ${devCompleteBugCommitment} bugs in Dev Complete`
