@@ -18,23 +18,25 @@ import Metric from './metrics/metric';
 let allowedRooms = process.env.ALLOWED_ITERATION_ROOMS.split(',');
 
 module.exports = (robot) => {
-  robot.respond(/dev complete story points: (.*)/i, ({ match, message: { room } }) => {
-    if (allowedRooms.some(i => room == i)) {
-      robot.brain.set('devCompleteStoryPointCommitment', match[1]);
+  robot.respond(/dev complete story points: (.*)/i, (res) => {
+    if (allowedRooms.some(i => res.message.room == i)) {
+      robot.brain.set('devCompleteStoryPointCommitment', res.match[1]);
+      res.reply(`Updated to ${res.match[1]}`);
     }
   })
 
-  robot.respond(/dev complete bugs: (.*)/i, ({ match, message: { room } }) => {
-    if (allowedRooms.some(i => room == i)) {
-      robot.brain.set('devCompleteBugCommitment', match[1]);
+  robot.respond(/dev complete bugs: (.*)/i, (res) => {
+    if (allowedRooms.some(i => res.message.room == i)) {
+      robot.brain.set('devCompleteBugCommitment', res.match[1]);
+      res.reply(`Updated to ${res.match[1]}`);
     }
   })
 
-  robot.respond(/commitment/i, ({ match, message: { room }, reply }) => {
-    if (allowedRooms.some(i => room == i)) {
+  robot.respond(/commitment/i, (res) => {
+    if (allowedRooms.some(i => res.message.room == i)) {
       let devCompleteStoryPointCommitment = robot.brain.get('devCompleteStoryPointCommitment');
       let devCompleteBugCommitment = robot.brain.get('devCompleteBugCommitment');
-    
+
       reply(
         `Your team currently has:
         ${Metric.getDevCompleteStoryPoints()} out of ${devCompleteStoryPointCommitment} story points in Dev Complete
