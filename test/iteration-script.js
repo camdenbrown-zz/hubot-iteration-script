@@ -24,12 +24,18 @@ describe('iteration-script', function() {
     it('sets the dev complete story point commitment', function() {
       this.room.user.say('camden', 'hubot dev complete story points: 100').then(() => {
         expect(this.room.robot.brain.get('devCompleteStoryPointCommitment')).to.eql('100');
-      });
+        expect(this.room.messages).to.eql([[ 'camden', 'hubot dev complete story points: 100' ],
+                                           ['hubot', '@camden Updated to 100']
+                                          ]);
+      })
     });
 
     it('sets the dev complete bug commitment', function() {
       this.room.user.say('camden', 'hubot dev complete bugs: 10').then(() => {
         expect(this.room.robot.brain.get('devCompleteBugCommitment')).to.eql('10');
+        expect(this.room.messages).to.eql([[ 'camden', 'hubot dev complete bugs: 10' ],
+                                           ['hubot', '@camden Updated to 10']
+                                          ]);
       });
     });
 
