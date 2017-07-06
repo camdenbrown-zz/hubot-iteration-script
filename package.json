@@ -1,7 +1,7 @@
 {
   "name": "hubot-iteration-script",
   "description": "A hubot script that gives useful information about Agile iterations.",
-  "version": "1.0.3",
+  "version": "2.0.0",
   "author": "Camden Brown",
   "license": "MIT",
   "keywords": "hubot, hubot-scripts",
