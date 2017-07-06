@@ -4,7 +4,7 @@
   "version": "2.0.0",
   "author": "Camden Brown",
   "license": "MIT",
-  "keywords": "hubot, hubot-scripts",
+  "keywords": "hubot, hubot-scripts, dev complete story points:, dev complete bugs:, commitment",
   "repository": {
     "type": "git",
     "url": "git://github.com/hubot-scripts/hubot-iteration-script.git"
