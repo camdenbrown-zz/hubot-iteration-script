@@ -2,7 +2,6 @@ import MetovaMetrics from 'metova-metrics';
 import Moment from 'moment';
 const jiraIdentifier = process.env.JIRA_IDENTIFIER;
 const projectIdentifier = process.env.PROJECT_IDENTIFIER;
-const thirtyMinutes = 30 * 60 * 1000;
 const previousIterationStartDate = Moment().startOf('isoWeek').subtract(3, 'days').startOf('day');
 const newIterationStartDate = Moment().startOf('isoWeek').add(4, 'days');
 
@@ -13,7 +12,6 @@ export default class DevCompleteTickets {
   }
 
     updateMetrics();
-    setInterval(updateMetrics, thirtyMinutes);
   }
 
   getStoryPoints() {
