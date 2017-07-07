@@ -1,6 +1,5 @@
-const Helper = require('hubot-test-helper');
-const chai = require('chai');
-const { expect } = chai;
+import Helper from 'hubot-test-helper';
+import chai, { expect } from 'chai';
 const helper = new Helper('../src/iteration-script.js');
 
 process.env.ALLOWED_ITERATION_ROOMS = ['room_1, room_2'];
