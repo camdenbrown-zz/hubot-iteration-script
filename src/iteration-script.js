@@ -37,12 +37,15 @@ module.exports = (robot) => {
       let devCompleteStoryPointCommitment = robot.brain.get('devCompleteStoryPointCommitment');
       let devCompleteBugCommitment = robot.brain.get('devCompleteBugCommitment');
       let metric = new Metric();
-
-      res.reply(
-        `Your team currently has:
-        ${metric.getDevCompleteStoryPoints()} out of ${devCompleteStoryPointCommitment} story points in Dev Complete
-        ${metric.getDevCompleteBugs()} out of ${devCompleteBugCommitment} bugs in Dev Complete`
-      );
+      // console.log(metric.retrieveMetrics())
+      metric.retrieveMetrics().then((data) => {
+        res.reply('HELLO', data)
+        // res.reply(
+        //   `Your team currently has:
+        //   ${data.storyPointCount} out of ${devCompleteStoryPointCommitment} story points in Dev Complete
+        //   ${data.bugCount} out of ${devCompleteBugCommitment} bugs in Dev Complete`
+        // );
+      });
     }
   });
 };

@@ -11,29 +11,19 @@ export default class DevCompleteTickets {
     this.totalBugCount = 0;
   }
 
-    updateMetrics();
-  }
-
-  getStoryPoints() {
-    return this.totalStoryPoints;
-  }
-
-  getBugCount() {
-    return this.totalBugCount;
-  }
-
-  _updateMetrics() {
-    this.totalBugCount = 0;
-    this.totalStoryPoints = 0;
+  updateMetrics() {
+    console.log('HIT', jiraIdentifier, projectIdentifier)
     MetovaMetrics.getMetrics({ namespace: "jira", metric: "stories" }, ({ data }) => {
-      data.forEach(buildProjectStatus);
+      _buildProjectStatus(data);
+      return {
+        storyPointCount: this.totalStoryPoints,
+        bugCount: this.bugCount
+      };
     });
   }
 
-  _buildProjectStatus(data) {
-    let ticket = data.value;
-
-    if(filterIterationDevComplete(data)) {
+  _buildProjectStatus({ value: ticket }) {
+    if(filterIterationDevComplete(ticket)) {
       if(ticket.issue_type === 'Story') {
         this.totalStoryPoints += ticket.story_point_value;
       } else if (ticket.issue_type === 'Bug') {
@@ -42,7 +32,7 @@ export default class DevCompleteTickets {
     }
   }
 
-  filterIterationDevComplete({ value: ticket }) {
+  filterIterationDevComplete(ticket) {
     return ticket.project_key === projectIdentifier
            && (ticket.state === 'completed' || ticket.state === 'accepted')
            && moment(ticket.completed_at).isBetween(previousIterationStartDate, newIterationStartDate);

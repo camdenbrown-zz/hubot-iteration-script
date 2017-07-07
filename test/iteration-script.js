@@ -38,8 +38,13 @@ describe('iteration-script', function() {
       });
     });
 
-    xit('returns the commitment result for the current iteration', function() {
-        this.room.user.say('camden', 'hubot commitment').then(() => {});
+    it('returns the commitment result for the current iteration', function() {
+        this.room.user.say('camden', 'hubot commitment').then(() => {
+          // expect(this.room.messages).to.eql([[ 'camden', 'hubot commitment' ],
+          //                                    ['hubot', '@camden Updated to 10']
+          //                                   ]);
+          console.log(this.room.messages)
+        });
     });
   });
 
