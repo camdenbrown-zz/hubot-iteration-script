@@ -3,7 +3,7 @@ const jiraIdentifier = process.env.JIRA_IDENTIFIER;
 const projectIdentifier = process.env.PROJECT_IDENTIFIER;
 
 export default class Metric {
-  constuctor() {
+  constructor() {
     return Metrics.getProjectMetrics(jiraIdentifier, projectIdentifier);
   }
 

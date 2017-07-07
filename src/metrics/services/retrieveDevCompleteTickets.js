@@ -7,9 +7,10 @@ const previousIterationStartDate = Moment().startOf('isoWeek').subtract(3, 'days
 const newIterationStartDate = Moment().startOf('isoWeek').add(4, 'days');
 
 export default class DevCompleteTickets {
-  constuctor() {
+  constructor() {
     this.totalStoryPoints = 0;
     this.totalBugCount = 0;
+  }
 
     updateMetrics();
     setInterval(updateMetrics, thirtyMinutes);
